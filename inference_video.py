@@ -142,6 +142,7 @@ def main(labelmap_path, model_path, tf_record_path, config_path, output_path):
     anim = animation.FuncAnimation(f, animate, frames=195)
     anim.save(output_path, fps=5, dpi=300)
     
+# see README file for command-line example    
 if __name__ == "__main__": 
     logger = get_module_logger(__name__)
 
