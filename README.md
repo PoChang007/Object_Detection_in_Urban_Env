@@ -8,28 +8,29 @@ For this project, we will be using data from the [Waymo Open dataset](https://wa
 
 ## Structure
 
-The files in this repository will be organized as follows:
+The core files in this repository will be organized as follows:
 ```
-- Exploratory Data Analysis.ipynb: to confirm correct bounding box in images and analyze the dataset 
-- Explore augmentations.ipynb: to test augmentations in the dataset
+- exploratory_data_analysis.py: to confirm correct bounding box in images and analyze the dataset 
+- explore_augmentation.py: to test augmentations in the dataset
 - create_splits.py: to split data into training, validation and testing
 - edit_config.py: to create a new configuration for training
-- exporter_main_v2.py: to create an inference model
 - model_main_tf2.py: to launch training
+- exporter_main_v2.py: to create an inference model
+- inference_video.py: to make a video of object detection results
 ```
 
-Command line version:
+Jupyter Notebook:
 ```
-exploratory_data_analysis.py
-explore_augmentation.py
+Exploratory Data Analysis.ipynb
+Explore augmentations.ipynb
 ```
 
 The experiments folder are organized as follow:
 ```
 experiments/
-    - experiment0/... (initial config)
-    - experiment1/... (modified config 1)
-    - experiment2/... (modified config 2)
+    - experiment0/... (initial pipeline_config)
+    - experiment1/... (modified pipeline_config for improvements)
+    - experiment2/... (modified pipeline_config for improvements)
 ```
 
 The data folder contains:
@@ -44,7 +45,7 @@ data/
 The training folder contains:
 ```
 training/
-    - pre-trained model (empty to start)
+    - pre-trained model (empty to start, see the instruction in "Edit the config file" section)
     - reference (empty to start)
 ```
 
@@ -56,22 +57,20 @@ Use the provided Dockerfile and requirements in the [build directory](./build).
 
 Follow [the README](./build/README.md) to create a docker container and install all prerequisites.
 
-An alternative way is to download each library individually. The following setup in the local machine can run the program successfully:
+An alternative way is to download each library individually as well as [python library dependencies](./build/requirements.txt). The following setup in the local machine can run the program successfully:
 
 * Ubuntu 20.04
 * Python 3.8.10
 * CUDA 11.2
 * cuDNN 8.1
 * TensorFlow 2.6
-* TensorFlow Object Detection API
-* waymo-open-dataset-tf-2-4-0
 
 Note that in `model_lib_v2.py` (TensorFlow Object Detection API), put `from object_detection import eval_util` in the last import to avoid the potential segmentation fault.
 
 ## Instructions
 
-1. Clone this repo: `git clone https://github.com/PoChang007/Object_Detection.git`
-2. `cd Object_Detection`
+1. Clone this repo: `git clone https://github.com/PoChang007/Object_Detection_in_Urban_Env.git`
+2. `cd Object_Detection_in_Urban_Env`
 
 ### Download and process the data
 
@@ -123,3 +122,15 @@ To monitor the training, launch a tensorboard instance by running `tensorboard -
 ### Improve the performances
 
 The initial experiment may not yield optimal results. However, we can make multiple changes to the config file to improve this model, for example, do the data augmentation. The [`preprocessor.proto`](https://github.com/tensorflow/models/blob/master/research/object_detection/protos/preprocessor.proto) file contains the different data augmentation method available in the Tf Object Detection API. 
+
+### Export the trained model
+
+```
+python3 ./exporter_main_v2.py --input_type image_tensor --pipeline_config_path training/reference/pipeline_new.config --trained_checkpoint_dir training/reference --output_directory training/experiment0/exported_model/
+```
+
+### Creating an animation
+
+```
+python3 inference_video.py --labelmap_path label_map.pbtxt --model_path training/experiment0/exported_model/saved_model --tf_record_path data/test/segment-tripID.tfrecord --config_path training/experiment0/exported_model/pipeline.config --output_path animation.mp4
+```

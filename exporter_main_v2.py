@@ -155,5 +155,6 @@ def main(_):
       FLAGS.side_input_types, FLAGS.side_input_names)
 
 
+# see README file for command-line example 
 if __name__ == '__main__':
   app.run(main)
