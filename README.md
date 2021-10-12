@@ -4,7 +4,7 @@
 
 ## Data
 
-For this project, we will be using data from the [Waymo Open dataset](https://waymo.com/open/). The files can be downloaded directly from the website as tar files or from the [Google Cloud Bucket](https://console.cloud.google.com/storage/browser/waymo_open_dataset_v_1_2_0_individual_files/) as individual tf records. 
+We use data from the [Waymo Open dataset](https://waymo.com/open/). The files can be downloaded directly from the website as tar files or from the [Google Cloud Bucket](https://console.cloud.google.com/storage/browser/waymo_open_dataset_v_1_2_0_individual_files/) as individual tf records. 
 
 ## Structure
 
@@ -45,7 +45,7 @@ data/
 The training folder contains:
 ```
 training/
-    - pre-trained model (empty to start, see the instruction in "Edit the config file" section)
+    - pre-trained model (contains the checkpoints of the pretrained models. see the instruction in "Edit the config file" section)
     - reference (empty to start)
 ```
 

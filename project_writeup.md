@@ -44,7 +44,7 @@ Since the images in the same Trip IDs in Waymo open dataset have similar charact
 
 ### Reference experiment (Experiment 0)
 
-We perform the transfer learning using [SSD_ResNet50 model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz) with the default pipeline configuration. The results of Loss and Detection Box Recall/Precision will be served as baselines. The curve in orange is Loss in training steps and blue dot is Loss in evaluation. The classification loss between training (0.1482) and evaluation (0.3724) is around 0.2242. To improve the initial results, we can add more variabilities in our data to simulate different environments during training. Hence, we will add more options of data augmentation in the pipeline configuration. 
+We perform the transfer learning using [SSD_ResNet50 model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz) with the [default pipeline configuration](https://github.com/PoChang007/Object_Detection_in_Urban_Env/tree/main/experiments/experiment_0). The results of Loss and Detection Box Recall/Precision will be served as baselines. The curve in orange is Loss in training steps and blue dot is Loss in evaluation. The classification loss between training (0.1482) and evaluation (0.3724) is around 0.2242. To improve the initial results, we can add more variabilities in our data to simulate different environments during training. Hence, we will add more options of data augmentation in the pipeline configuration. 
 
 <img src="docs/baseline_training.png" width="1000">
 <hr>
@@ -68,7 +68,7 @@ Here we try several options of data augmentation such as gray-scale image conver
 
 #### Experiment 1
 
-The processing operations on images are added in data augmentation part in pipeline_config:
+The processing operations on images are added in data augmentation part in [pipeline_config](https://github.com/PoChang007/Object_Detection_in_Urban_Env/tree/main/experiments/experiment_1):
 
 * Randomly convert the rgb image to the gray image
 * Randomly scale the value of all pixels between the defined range
@@ -88,7 +88,7 @@ Since the baseline config already has randomly horizontal flipping and randomly 
 
 #### Experiment 2
 
-The processing operations on images are added in data augmentation part in pipeline_config:
+The processing operations on images are added in data augmentation part in [pipeline_config](https://github.com/PoChang007/Object_Detection_in_Urban_Env/tree/main/experiments/experiment_2):
 
 * Randomly convert the rgb image to the gray image
 * Randomly adjust image brightness
