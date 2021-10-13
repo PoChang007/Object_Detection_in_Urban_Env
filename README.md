@@ -16,7 +16,6 @@ The core files in this repository will be organized as follows:
 - edit_config.py: to create a new configuration for training
 - model_main_tf2.py: to launch training
 - exporter_main_v2.py: to create an inference model
-- inference_video.py: to make a video of object detection results
 ```
 
 Jupyter Notebook:
@@ -25,28 +24,35 @@ Exploratory Data Analysis.ipynb
 Explore augmentations.ipynb
 ```
 
+Utility:
+```
+process_waymo_data.py: transform downloaded .tfrecord of Waymo open dataset into objection detection api format
+inference_video.py: to make a video of object detection results
+modify_tf_record.py: import and modify the data and export again 
+```
+
 The experiments folder are organized as follow:
 ```
-experiments/
-    - experiment0/... (initial pipeline_config)
-    - experiment1/... (modified pipeline_config for improvements)
-    - experiment2/... (modified pipeline_config for improvements)
+📂experiments/
+    - 📂experiment0/...: (initial pipeline_config)
+    - 📂experiment1/...: (modified pipeline_config)
+    - 📂experiment2/...: (modified pipeline_config)
 ```
 
 The data folder contains:
 ```
-data/
-    - processed_data: contain the processed data from Waymo Open dataset (empty to start)
-    - test: contain the test data (empty to start)
-    - train: contain the train data (empty to start)
-    - val: contain the val data (empty to start)
+📂data/
+    - 📂processed_data/...: contain the processed data from Waymo Open dataset (empty to start)
+    - 📂test/...: contain the test data (empty to start)
+    - 📂train/...: contain the train data (empty to start)
+    - 📂val/...: contain the val data (empty to start)
 ```
 
 The training folder contains:
 ```
-training/
-    - pre-trained model (contains the checkpoints of the pretrained models. see the instruction in "Edit the config file" section)
-    - reference (empty to start)
+📂training/
+    - 📂pre-trained model/...: contain the checkpoints of the pretrained models (empty to start)
+    - 📂reference/...: (empty to start)
 ```
 
 ## Prerequisites
@@ -65,7 +71,7 @@ An alternative way is to download each library individually as well as [python l
 * cuDNN 8.1
 * TensorFlow 2.6
 
-Note that in `model_lib_v2.py` (TensorFlow Object Detection API), put `from object_detection import eval_util` in the last import to avoid the potential segmentation fault.
+Note that in `model_lib_v2.py` (TensorFlow Object Detection API), put `from object_detection import eval_util` as the last import to avoid the potential segmentation fault.
 
 ## Instructions
 

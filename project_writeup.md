@@ -2,7 +2,7 @@
 
 ## Project overview
 
-Object detection techniques are indispensable parts for autonomous driving. Accurately detecting the surrounding objects can help autonomous vehicles react and prevent potential collisions. In this project, we use deep learning approaches to detect objects in urban environments. The [Waymo Open dataset](https://waymo.com/open/), which provides rich and yet various driving scenes, is used to train our neural network models. We first analyze the data in Waymo Open dataset and split the data into training, validation and test sets based on the cross-validation method. And we perform the training and further improve the model with different strategies. 
+Object detection techniques are indispensable parts for autonomous driving. Accurately detecting the surrounding objects can help autonomous vehicles react and prevent potential collisions. In this project, we use deep learning approaches to detect objects in urban environments. The [Waymo Open dataset](https://waymo.com/open/), which provides rich and yet various driving scenes, will be used to train our neural network models. We first analyze the data in Waymo Open dataset and split the data into training, validation and test sets based on the cross-validation method. And we perform the training and further improve the model with different strategies. 
 
 | | |
 |:---------------:|:---------------:|
@@ -38,13 +38,13 @@ Next, we analyze the bounding box's total count and the distribution of the boun
 
 ### Cross validation
 
-Since the images in the same Trip IDs in Waymo open dataset have similar characteristics (number of object for each class, images taken in the daytime/at night and so on), we split those images in the same group. Here split the data into training, validation and test sets. More specifically, 75% for training, 15% for validation and 10% for test. Each set has its own folder containing its corresponding images split from the processed Waymo open data. 
+Since the images in the same Trip IDs in Waymo open dataset have similar characteristics (number of object for each class, images taken in the daytime/at night and so on), we [split those images](./create_splits.py) in the same group. Here split the data into training, validation and test sets. More specifically, 75% for training, 15% for validation and 10% for test. Each set has its own folder containing its corresponding images split from the processed Waymo open data. 
 
 ## Training
 
 ### Reference experiment (Experiment 0)
 
-We perform the transfer learning using [SSD_ResNet50 model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz) with the [default pipeline configuration](https://github.com/PoChang007/Object_Detection_in_Urban_Env/tree/main/experiments/experiment_0). The results of Loss and Detection Box Recall/Precision will be served as baselines. The curve in orange is Loss in training steps and blue dot is Loss in evaluation. The classification loss between training (0.1482) and evaluation (0.3724) is around 0.2242. To improve the initial results, we can add more variabilities in our data to simulate different environments during training. Hence, we will add more options of data augmentation in the pipeline configuration. 
+We perform the transfer learning using [SSD_ResNet50 model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz) with the [default pipeline configuration](./experiments/experiment_0/pipeline.config). The results of Loss and DetectionBox_Recall/Precision will be served as baselines. The curve in orange is Loss in training steps and blue dot is Loss in evaluation. The classification loss between training (0.1482) and evaluation (0.3724) is around 0.2242. This indicates that the trained model needs to be more generous to predict objects in unseen data. To improve the initial results, we can add more variabilities in our data to simulate different environments during training. Hence, we will add more options of data augmentation in the pipeline configuration.
 
 <img src="docs/baseline_training.png" width="1000">
 <hr>
@@ -68,7 +68,7 @@ Here we try several options of data augmentation such as gray-scale image conver
 
 #### Experiment 1
 
-The processing operations on images are added in data augmentation part in [pipeline_config](https://github.com/PoChang007/Object_Detection_in_Urban_Env/tree/main/experiments/experiment_1):
+The processing operations on images are added in data augmentation part in [pipeline_config](./experiments/experiment_1/pipeline.config):
 
 * Randomly convert the rgb image to the gray image
 * Randomly scale the value of all pixels between the defined range
@@ -88,12 +88,12 @@ Since the baseline config already has randomly horizontal flipping and randomly 
 
 #### Experiment 2
 
-The processing operations on images are added in data augmentation part in [pipeline_config](https://github.com/PoChang007/Object_Detection_in_Urban_Env/tree/main/experiments/experiment_2):
+The processing operations on images are added in data augmentation part in [pipeline_config](./experiments/experiment_2/pipeline.config):
 
 * Randomly convert the rgb image to the gray image
 * Randomly adjust image brightness
-* Randomly changes hue value
-* Randomly changes saturation with the defined range
+* Randomly change hue value
+* Randomly change saturation with the defined range
 
 As shown in the figures below, the difference (0.1242) of Classification Loss between training (0.1366) and evaluation (0.2608) is also better than the baseline. The evaluation metrics, Precision and Recall, also got improved.
 
@@ -108,7 +108,7 @@ As shown in the figures below, the difference (0.1242) of Classification Loss be
 
 ### Discussion
 
-There are some other options in pipeline_config that may potentially improve the model. However, the class labels (hardly see any cyclist) and images taken in different conditions (rain, fog, night time) are not balanced. It will be nice to have more diverse sets of data for training. Moreover, some of the ground truth bounding boxes in Waymo Data are super small, which nearly cannot be perceived by human eye for data confirmation.
+There are some other options in pipeline_config that may potentially improve the model. However, the class labels (hardly see any cyclist) and images taken in different conditions (rain, fog, night time) are not balanced. It will be nice to have more diverse sets of data for training. Moreover, some of the ground truth bounding boxes in Waymo Data are quite small, which nearly cannot be perceived by human eye for data confirmation.
 
 ## Results
 
