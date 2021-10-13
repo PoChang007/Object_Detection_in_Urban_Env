@@ -27,8 +27,8 @@ Explore augmentations.ipynb
 Utility:
 ```
 process_waymo_data.py: transform downloaded .tfrecord of Waymo open dataset into objection detection api format
-inference_video.py: to make a video of object detection results
-modify_tf_record.py: import and modify the data and export again 
+inference_video.py: to create a video of object detection results
+modify_tf_record.py: import and modify the tfrecord file, and then export it again
 ```
 
 The experiments folder are organized as follow:

@@ -112,8 +112,8 @@ There are some other options in pipeline_config that may potentially improve the
 
 ## Results
 
-After the improved model is exported, we perform object detection on driving scenes stored in test set.  
-The following video demonstrates the results of object detection based on the exported model.
+After the trained model is exported, we perform object detection with the model on driving scenes stored in the test set.  
+The object detection results are shown in the video below:
 
 <img src="docs/object_detection.gif" width="600">
 <hr>
